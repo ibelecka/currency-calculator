@@ -23,6 +23,19 @@ API for a currency calculator with configurable conversion fees.
 
 ## How to Run the Application
 
+### 0. Clone the Project
+To get started with the project, first, clone the repository from GitHub:
+
+```bash
+git clone https://github.com/ibelecka/currency-calculator.git
+```
+
+After cloning, navigate into the project directory:
+
+```bash
+cd your-repository
+```
+
 ### 1. Build the Application
 
 First, package the application using Maven:
@@ -30,6 +43,7 @@ First, package the application using Maven:
 ```bash
 mvn clean package
 ```
+
 
 This will generate a JAR file in the `target` directory.
 
