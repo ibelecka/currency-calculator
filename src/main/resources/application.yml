@@ -1,0 +1,20 @@
+currency-conversion:
+  defaultFee: 0.20
+  ecb-api: https://data-api.ecb.europa.eu/service/data/EXR/D...SP00.A?startPeriod=
+
+
+spring:
+  application:
+    name: currency-calculator
+  datasource:
+    url: jdbc:postgresql://localhost:5432/currency-calculator
+    username: currency-admin
+    password: currency-admin
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+  server:
+    port: 8080
+
