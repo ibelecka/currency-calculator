@@ -12,7 +12,7 @@ API for a currency calculator with configurable conversion fees.
 ## Project Structure
 
 ```
-/your-project
+/currency-calculator
 ├── Dockerfile
 ├── docker-compose.yml
 ├── README.md
