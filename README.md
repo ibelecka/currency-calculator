@@ -155,6 +155,10 @@ docker-compose down
     - `currencyFrom`: The source currency.
     - `currencyTo`: The target currency.
     - `amount`: The amount to convert.
+- **Example**:
+```bash
+  localhost:8080/public/convert?currencyFrom=USD&currencyTo=EUR&amount=100
+```    
 - **Response**:
     - `200 OK`: If the currency pair is found and the conversion is successful.
     - `404 Not Found`: If no currency pair with the specified parameters is found.
