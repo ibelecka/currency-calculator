@@ -30,7 +30,7 @@ To get started with the project, first, clone the repository from GitHub:
 git clone https://github.com/ibelecka/currency-calculator.git
 ```
 
-After cloning, navigate into the project directory:
+After cloning, navigate into the project root directory :
 
 ```bash
 cd your-repository
@@ -49,7 +49,7 @@ This will generate a JAR file in the `target` directory.
 
 ### 2. Build and Start Containers
 
-Use Docker Compose to build the application image and start all containers:
+Use Docker Compose to build the application image and start all containers (can take up to 10 minutes):
 
 ```bash
 docker-compose up --build

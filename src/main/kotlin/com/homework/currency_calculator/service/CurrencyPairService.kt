@@ -19,6 +19,9 @@ import java.time.LocalDate
 import org.w3c.dom.Element
 import javax.xml.parsers.DocumentBuilderFactory
 import java.io.InputStream
+import java.time.DayOfWeek
+import java.time.LocalTime
+import java.time.ZoneId
 
 @Service
 @Component
@@ -50,7 +53,15 @@ class CurrencyPairService (private val currencyPairRepository: CurrencyPairRepos
 
     fun fetchDataFromECB() {
         val today = LocalDate.now()
-        val ecbAPIString = "$ecbAPI${today.year}-${today.monthValue}-${today.dayOfMonth - 1}"
+        val currentTime = LocalTime.now(ZoneId.of("CET"))
+
+        val ecbDate = when {
+            currentTime.isBefore(LocalTime.of(16, 0)) -> today.minusDays(1)  // Before 16:00, use yesterday
+            today.dayOfWeek == DayOfWeek.SATURDAY -> today.minusDays(1)  // Saturday, use Friday
+            today.dayOfWeek == DayOfWeek.SUNDAY -> today.minusDays(2)  // Sunday, use Friday
+            else -> today  // Otherwise, use today's date
+        }
+        val ecbAPIString = "$ecbAPI${ecbDate.year}-${ecbDate.monthValue}-${ecbDate.dayOfMonth}"
         val client = HttpClient.newHttpClient()
 
         try {
@@ -149,13 +160,6 @@ class CurrencyPairService (private val currencyPairRepository: CurrencyPairRepos
         return "currencyFrom$currencyFrom" + "currencyTo$currencyTo"
     }
 
-//    fun saveOrUpdateCurrencyPair(currencyPairRequest : CurrencyPairRequest) {
-//        //no sense to save new currency pair without rate
-//        if (currencyPairRequest.rate == null) {
-//            return
-//        }
-//        updateFeeCurrencyPair(currencyPairRequest)
-//    }
 
     fun updateFeeCurrencyPair(currencyPairRequest: CurrencyPairRequest): CurrencyPairEntity? {
         return currencyPairRepository.findByCurrencyFromAndCurrencyTo(
@@ -165,12 +169,6 @@ class CurrencyPairService (private val currencyPairRepository: CurrencyPairRepos
             currencyPairRepository.save(this)
         }
     }
-
-
-//    fun removeFee(currencyPairRequest : CurrencyPairRequest) : CurrencyPairEntity? {
-//        currencyPairRequest.fee = null
-//        return updateFeeCurrencyPair(currencyPairRequest)
-//    }
 
 
     fun saveOrUpdateCurrencyPairFromECB(currencyPairECBRequest: CurrencyPairECBRequest) {
